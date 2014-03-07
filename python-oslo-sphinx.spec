@@ -1,8 +1,8 @@
-%global sname oslo.sphinx
+%global sname oslosphinx
 
 Name:       python-oslo-sphinx
-Version:    1.0
-Release:    4%{?dist}
+Version:    2.0
+Release:    1%{?dist}
 Summary:    OpenStack Sphinx Extensions
 
 Group:      Development/Languages
@@ -29,8 +29,6 @@ OpenStack.
 
 %prep
 %setup -q -n %{sname}-%{version}
-# Remove bundled egg-info
-rm -rf oslo_sphinx.egg-info
 
 %build
 %{__python} setup.py build
@@ -43,11 +41,13 @@ rm -fr doc/build/html/.buildinfo
 
 %files
 %doc LICENSE README.rst
-%{python_sitelib}/oslo
+%{python_sitelib}/%{sname}
 %{python_sitelib}/*.egg-info
-%{python_sitelib}/*-nspkg.pth
 
 %changelog
+* Fri Mar 07 2014 Pádraig Brady <pbrady@redhat.com> 2.0-1
+- Latest upstream
+
 * Sun Aug 04 2013 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1.0-4
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_20_Mass_Rebuild
 
