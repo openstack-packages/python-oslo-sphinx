@@ -2,7 +2,7 @@
 
 Name:       python-oslo-sphinx
 Version:    1.1
-Release:    1%{?dist}
+Release:    2%{?dist}
 Summary:    OpenStack Sphinx Extensions
 
 Group:      Development/Languages
@@ -48,6 +48,9 @@ rm -fr doc/build/html/.buildinfo
 %{python_sitelib}/*-nspkg.pth
 
 %changelog
+* Sat Jun 07 2014 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1.1-2
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_21_Mass_Rebuild
+
 * Fri Mar 07 2014 Pádraig Brady <pbrady@redhat.com> - 1.1-1
 - Update to release 1.1
 
