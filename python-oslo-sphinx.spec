@@ -1,4 +1,6 @@
-%global sname oslo.sphinx
+%global sname oslosphinx
+%global upstream_version UPSTREAMVERSION
+
 
 Name:       python-oslo-sphinx
 Version:    1.1
@@ -28,7 +30,7 @@ The oslo-sphinx library contains Sphinx theme and extensions support used by
 OpenStack.
 
 %prep
-%setup -q -n %{sname}-%{version}
+%setup -q -n %{sname}-%{upstream_version}
 # Remove bundled egg-info
 rm -rf oslo_sphinx.egg-info
 
@@ -43,9 +45,8 @@ rm -fr doc/build/html/.buildinfo
 
 %files
 %doc LICENSE README.rst
-%{python_sitelib}/oslo
+%{python_sitelib}/oslosphinx
 %{python_sitelib}/*.egg-info
-%{python_sitelib}/*-nspkg.pth
 
 %changelog
 * Sat Jun 07 2014 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1.1-2
