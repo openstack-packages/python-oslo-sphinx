@@ -1,10 +1,8 @@
-%global sname oslosphinx
-%global upstream_version UPSTREAMVERSION
-
+%global sname oslo.sphinx
 
 Name:       python-oslo-sphinx
-Version:    1.1
-Release:    2%{?dist}
+Version: XXX
+Release: XXX{?dist}
 Summary:    OpenStack Sphinx Extensions
 
 Group:      Development/Languages
@@ -30,7 +28,7 @@ The oslo-sphinx library contains Sphinx theme and extensions support used by
 OpenStack.
 
 %prep
-%setup -q -n %{sname}-%{upstream_version}
+%setup -q -n oslosphinx-%{upstream_version}
 # Remove bundled egg-info
 rm -rf oslo_sphinx.egg-info
 
