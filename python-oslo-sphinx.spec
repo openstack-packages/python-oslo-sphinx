@@ -1,14 +1,13 @@
-%global sname oslo.sphinx
+%global pypi_name oslosphinx
 
 Name:       python-oslo-sphinx
-Version:    1.1
-Release:    2%{?dist}
-Summary:    OpenStack Sphinx Extensions
+Version:    2.3.0
+Release:    1%{?dist}
+Summary:    OpenStack Sphinx Extensions and Theme
 
-Group:      Development/Languages
 License:    ASL 2.0
 URL:        https://launchpad.net/oslo
-Source0:    http://tarballs.openstack.org/%{sname}/%{sname}-%{version}.tar.gz
+Source0:    https://pypi.python.org/packages/source/o/%{pypi_name}/%{pypi_name}-%{version}.tar.gz
 
 BuildArch:  noarch
 Requires:   python-setuptools
@@ -28,26 +27,39 @@ The oslo-sphinx library contains Sphinx theme and extensions support used by
 OpenStack.
 
 %prep
-%setup -q -n %{sname}-%{version}
+%setup -q -n %{pypi_name}-%{version}
 # Remove bundled egg-info
-rm -rf oslo_sphinx.egg-info
+rm -rf %{pypi_name}.egg-info
 
 %build
-%{__python} setup.py build
+%{__python2} setup.py build
 
 %install
-%{__python} setup.py install -O1 --skip-build --root %{buildroot}
+%{__python2} setup.py install -O1 --skip-build --root %{buildroot}
 
-# Fix hidden-file-or-dir warnings
-rm -fr doc/build/html/.buildinfo
+# create backward compatibile oslo.sphinx namespace package
+mkdir oslo
+mv oslosphinx oslo/sphinx
+sed -i 's/oslosphinx/oslo.sphinx/' oslo/sphinx/intersphinx.py
+sed -i '/packages =/ { N; s/oslosphinx/oslo\n\toslo.sphinx\nnamespace_packages =\n\toslo/ }' setup.cfg
+%{__python2} setup.py build
+%{__python2} setup.py install -O1 --skip-build --root %{buildroot}
 
 %files
 %doc LICENSE README.rst
-%{python_sitelib}/oslo
-%{python_sitelib}/*.egg-info
-%{python_sitelib}/*-nspkg.pth
+%{python2_sitelib}/%{pypi_name}
+%{python2_sitelib}/oslo
+%{python2_sitelib}/*.egg-info
+%{python2_sitelib}/*-nspkg.pth
 
 %changelog
+* Mon Dec 15 2014 Alan Pevec <alan.pevec@redhat.com> - 2.3.0-1
+- Update to 2.3.0
+
+* Tue Nov 04 2014 Alan Pevec <alan.pevec@redhat.com> - 2.2.0-1
+- Update to 2.2.0
+- Provide both old oslo.sphinx namespaced package and new oslosphinx
+
 * Sat Jun 07 2014 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1.1-2
 - Rebuilt for https://fedoraproject.org/wiki/Fedora_21_Mass_Rebuild
 
