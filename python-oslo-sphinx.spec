@@ -1,5 +1,9 @@
 %global pypi_name oslosphinx
 
+%if 0%{?fedora}
+%global with_python3 1
+%endif
+
 %if 0%{?rhel} && 0%{?rhel} <= 6
 %{!?__python2: %global __python2 /usr/bin/python2}
 %{!?python2_sitelib: %global python2_sitelib %(%{__python2} -c "from distutils.sysconfig import get_python_lib; print(get_python_lib())")}
@@ -9,7 +13,7 @@
 Name:       python-oslo-sphinx
 Version:    2.5.0
 Release:    1%{?dist}
-Summary:    OpenStack Sphinx Extensions and Theme
+Summary:    OpenStack Sphinx Extensions and Theme for Python 2
 
 License:    ASL 2.0
 URL:        https://launchpad.net/oslo
@@ -24,7 +28,7 @@ BuildRequires: python-pbr
 BuildRequires: python-d2to1
 
 %description
-The Oslo project intends to produce a python library containing
+The Oslo project intends to produce a python 2 library containing
 infrastructure code shared by OpenStack projects. The APIs provided
 by the project should be high quality, stable, consistent and generally
 useful.
@@ -32,13 +36,48 @@ useful.
 The oslo-sphinx library contains Sphinx theme and extensions support used by
 OpenStack.
 
+%if 0%{with_python3}
+%package -n python3-oslo-sphinx
+Summary:        OpenStack Sphinx Extensions and Theme for Python 3
+License:        ASL 2.0
+BuildArch:  noarch
+Requires:   python3-setuptools
+
+BuildRequires: python3-devel
+BuildRequires: python3-setuptools
+BuildRequires: python3-pbr
+BuildRequires: python3-d2to1
+%endif
+
+%if 0%{with_python3}
+%description -n python3-oslo-sphinx
+The Oslo project intends to produce a python 3 library containing
+infrastructure code shared by OpenStack projects. The APIs provided
+by the project should be high quality, stable, consistent and generally
+useful.
+
+The oslo-sphinx library contains Sphinx theme and extensions support used by
+OpenStack.
+%endif
+
 %prep
 %setup -q -n %{pypi_name}-%{version}
 # Remove bundled egg-info
 rm -rf %{pypi_name}.egg-info
 
+%if 0%{with_python3}
+cp -a . %{py3dir}
+%endif
+
 %build
 %{__python2} setup.py build
+
+%if 0%{with_python3}
+pushd %{py3dir}
+%{__python3} setup.py build
+popd
+%endif
+
 
 %install
 %{__python2} setup.py install -O1 --skip-build --root %{buildroot}
@@ -52,16 +91,34 @@ sed -i '/packages =/ { N; s/oslosphinx/oslo\n\toslo.sphinx\nnamespace_packages =
 %{__python2} setup.py install -O1 --skip-build --root %{buildroot}
 ln -s ../../oslosphinx/theme %{buildroot}%{python2_sitelib}/oslo/sphinx
 
+%if 0%{with_python3}
+pushd %{py3dir}
+%{__python3} setup.py install -O1 --skip-build --root=%{buildroot}
+popd
+%endif
+
 %files
-%doc LICENSE README.rst
+%doc README.rst
+%license LICENSE
 %{python2_sitelib}/%{pypi_name}
 %{python2_sitelib}/oslo
 %{python2_sitelib}/*.egg-info
 %{python2_sitelib}/*-nspkg.pth
 
+%if 0%{with_python3}
+%files -n python3-oslo-sphinx
+%doc README.rst
+%license LICENSE
+%{python3_sitelib}/%{pypi_name}
+%{python3_sitelib}/*.egg-info
+%endif
+
 %changelog
 * Wed Mar 25 2015 Alan Pevec <alan.pevec@redhat.com> - 2.5.0-1
 - Update to 2.5.0
+
+* Fri Mar 13 2015 Parag Nemade <pnemade AT redhat DOT com> - 2.3.0-3
+- Added python3 subpackage
 
 * Mon Dec 15 2014 Alan Pevec <alan.pevec@redhat.com> - 2.3.0-2
 - Update to 2.3.0
