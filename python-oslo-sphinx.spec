@@ -1,8 +1,14 @@
 %global pypi_name oslosphinx
 
+%if 0%{?rhel} && 0%{?rhel} <= 6
+%{!?__python2: %global __python2 /usr/bin/python2}
+%{!?python2_sitelib: %global python2_sitelib %(%{__python2} -c "from distutils.sysconfig import get_python_lib; print(get_python_lib())")}
+%{!?python2_sitearch: %global python2_sitearch %(%{__python2} -c "from distutils.sysconfig import get_python_lib; print(get_python_lib(1))")}
+%endif
+
 Name:       python-oslo-sphinx
-Version:    2.3.0
-Release:    2%{?dist}
+Version:    2.5.0
+Release:    1%{?dist}
 Summary:    OpenStack Sphinx Extensions and Theme
 
 License:    ASL 2.0
@@ -44,7 +50,7 @@ sed -i 's/oslosphinx/oslo.sphinx/' oslo/sphinx/intersphinx.py
 sed -i '/packages =/ { N; s/oslosphinx/oslo\n\toslo.sphinx\nnamespace_packages =\n\toslo/ }' setup.cfg
 %{__python2} setup.py build
 %{__python2} setup.py install -O1 --skip-build --root %{buildroot}
-ln -s ln -s ../../oslosphinx/theme %{buildroot}%{python2_sitelib}/oslo/sphinx
+ln -s ../../oslosphinx/theme %{buildroot}%{python2_sitelib}/oslo/sphinx
 
 %files
 %doc LICENSE README.rst
@@ -54,6 +60,9 @@ ln -s ln -s ../../oslosphinx/theme %{buildroot}%{python2_sitelib}/oslo/sphinx
 %{python2_sitelib}/*-nspkg.pth
 
 %changelog
+* Wed Mar 25 2015 Alan Pevec <alan.pevec@redhat.com> - 2.5.0-1
+- Update to 2.5.0
+
 * Mon Dec 15 2014 Alan Pevec <alan.pevec@redhat.com> - 2.3.0-2
 - Update to 2.3.0
 - Provide oslo.sphinx theme compatibility symlink
