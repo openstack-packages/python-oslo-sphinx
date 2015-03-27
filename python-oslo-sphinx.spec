@@ -12,7 +12,7 @@
 
 Name:       python-oslo-sphinx
 Version:    2.5.0
-Release:    1%{?dist}
+Release:    2%{?dist}
 Summary:    OpenStack Sphinx Extensions and Theme for Python 2
 
 License:    ASL 2.0
@@ -25,7 +25,6 @@ Requires:   python-setuptools
 BuildRequires: python2-devel
 BuildRequires: python-setuptools
 BuildRequires: python-pbr
-BuildRequires: python-d2to1
 
 %description
 The Oslo project intends to produce a python 2 library containing
@@ -46,7 +45,6 @@ Requires:   python3-setuptools
 BuildRequires: python3-devel
 BuildRequires: python3-setuptools
 BuildRequires: python3-pbr
-BuildRequires: python3-d2to1
 %endif
 
 %if 0%{with_python3}
