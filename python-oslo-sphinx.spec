@@ -35,7 +35,7 @@ useful.
 The oslo-sphinx library contains Sphinx theme and extensions support used by
 OpenStack.
 
-%if 0%{with_python3}
+%if 0%{?with_python3}
 %package -n python3-oslo-sphinx
 Summary:        OpenStack Sphinx Extensions and Theme for Python 3
 License:        ASL 2.0
@@ -47,7 +47,7 @@ BuildRequires: python3-setuptools
 BuildRequires: python3-pbr
 %endif
 
-%if 0%{with_python3}
+%if 0%{?with_python3}
 %description -n python3-oslo-sphinx
 The Oslo project intends to produce a python 3 library containing
 infrastructure code shared by OpenStack projects. The APIs provided
@@ -63,14 +63,14 @@ OpenStack.
 # Remove bundled egg-info
 rm -rf %{pypi_name}.egg-info
 
-%if 0%{with_python3}
+%if 0%{?with_python3}
 cp -a . %{py3dir}
 %endif
 
 %build
 %{__python2} setup.py build
 
-%if 0%{with_python3}
+%if 0%{?with_python3}
 pushd %{py3dir}
 %{__python3} setup.py build
 popd
@@ -89,7 +89,7 @@ sed -i '/packages =/ { N; s/oslosphinx/oslo\n\toslo.sphinx\nnamespace_packages =
 %{__python2} setup.py install -O1 --skip-build --root %{buildroot}
 ln -s ../../oslosphinx/theme %{buildroot}%{python2_sitelib}/oslo/sphinx
 
-%if 0%{with_python3}
+%if 0%{?with_python3}
 pushd %{py3dir}
 %{__python3} setup.py install -O1 --skip-build --root=%{buildroot}
 popd
@@ -103,7 +103,7 @@ popd
 %{python2_sitelib}/*.egg-info
 %{python2_sitelib}/*-nspkg.pth
 
-%if 0%{with_python3}
+%if 0%{?with_python3}
 %files -n python3-oslo-sphinx
 %doc README.rst
 %license LICENSE
