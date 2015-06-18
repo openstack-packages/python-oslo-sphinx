@@ -12,7 +12,7 @@
 
 Name:       python-oslo-sphinx
 Version:    2.5.0
-Release:    2%{?dist}
+Release:    3%{?dist}
 Summary:    OpenStack Sphinx Extensions and Theme for Python 2
 
 License:    ASL 2.0
@@ -112,6 +112,9 @@ popd
 %endif
 
 %changelog
+* Thu Jun 18 2015 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 2.5.0-3
+- Rebuilt for https://fedoraproject.org/wiki/Fedora_23_Mass_Rebuild
+
 * Wed Mar 25 2015 Alan Pevec <alan.pevec@redhat.com> - 2.5.0-1
 - Update to 2.5.0
 
