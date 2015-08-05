@@ -1,11 +1,10 @@
 %global sname oslo.sphinx
 
 Name:       python-oslo-sphinx
-Version: XXX
-Release: XXX{?dist}
+Version:    XXX
+Release:    XXX
 Summary:    OpenStack Sphinx Extensions
 
-Group:      Development/Languages
 License:    ASL 2.0
 URL:        https://launchpad.net/oslo
 Source0:    http://tarballs.openstack.org/%{sname}/%{sname}-%{version}.tar.gz
@@ -15,8 +14,11 @@ Requires:   python-setuptools
 
 BuildRequires: python2-devel
 BuildRequires: python-setuptools
-BuildRequires: python-pbr
 BuildRequires: python-d2to1
+BuildRequires: python-pbr
+
+Requires:      python-requests >= 2.5.2
+Requires:      python-pbr
 
 %description
 The Oslo project intends to produce a python library containing
@@ -33,31 +35,18 @@ OpenStack.
 rm -rf oslo_sphinx.egg-info
 
 %build
-%{__python} setup.py build
+%{__python2} setup.py build
 
 %install
-%{__python} setup.py install -O1 --skip-build --root %{buildroot}
+%{__python2} setup.py install -O1 --skip-build --root %{buildroot}
 
 # Fix hidden-file-or-dir warnings
 rm -fr doc/build/html/.buildinfo
 
 %files
-%doc LICENSE README.rst
-%{python_sitelib}/oslosphinx
-%{python_sitelib}/*.egg-info
+%license LICENSE
+%doc README.rst
+%{python2_sitelib}/oslosphinx
+%{python2_sitelib}/oslosphinx*.egg-info
 
 %changelog
-* Sat Jun 07 2014 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1.1-2
-- Rebuilt for https://fedoraproject.org/wiki/Fedora_21_Mass_Rebuild
-
-* Fri Mar 07 2014 Pádraig Brady <pbrady@redhat.com> - 1.1-1
-- Update to release 1.1
-
-* Sun Aug 04 2013 Fedora Release Engineering <rel-eng@lists.fedoraproject.org> - 1.0-4
-- Rebuilt for https://fedoraproject.org/wiki/Fedora_20_Mass_Rebuild
-
-* Mon Jul 22 2013 Pádraig Brady <pbrady@redhat.com> 1.0-3
-- Review adjustments
-
-* Mon Jul 8 2013 Dan Prince <dprince@redhat.com> 1.0-1
-- Initial package.
