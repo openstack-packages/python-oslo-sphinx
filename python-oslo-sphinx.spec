@@ -20,8 +20,9 @@ BuildArch:  noarch
 %package -n python2-%{pypi_name}
 Summary:    OpenStack Sphinx Extensions
 %{?python_provide:%python_provide python2-%{pypi_name}}
-# python_provide does not exist in CBS Cloud buildroot
-Provides:       python-%{pypi_name} = %{upstream_version}
+%if 0%{?fedora} < 23
+Obsoletes:  python-%{pypi_name} < %{version}-%{release}
+%endif
 
 Requires:   python-setuptools
 
