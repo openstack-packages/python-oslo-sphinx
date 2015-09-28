@@ -31,6 +31,7 @@ BuildRequires: python-setuptools
 BuildRequires: python-d2to1
 BuildRequires: python-pbr
 
+Requires:      git
 Requires:      python-requests >= 2.5.2
 Requires:      python-pbr
 Requires:      python-six >= 1.9.0
