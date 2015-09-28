@@ -32,6 +32,7 @@ BuildRequires: python-pbr
 
 Requires:      python-requests >= 2.5.2
 Requires:      python-pbr
+Requires:      python-six >= 1.9.0
 
 # tests
 BuildRequires: python-requests >= 2.5.2
@@ -59,6 +60,7 @@ BuildRequires: python3-pbr
 
 Requires:      python3-requests >= 2.5.2
 Requires:      python3-pbr
+Requires:      python3-six >= 1.9.0
 
 # tests
 BuildRequires: python3-requests >= 2.5.2
