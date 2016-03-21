@@ -1,4 +1,4 @@
-%global sname oslo.sphinx
+%global sname oslosphinx
 %global pypi_name oslo-sphinx
 
 %if 0%{?fedora}
@@ -8,8 +8,8 @@
 %{!?upstream_version: %global upstream_version %{version}%{?milestone}}
 
 Name:       python-oslo-sphinx
-Version:    XXX
-Release:    XXX
+Version:    4.3.0
+Release:    1%{?dist}
 Summary:    OpenStack Sphinx Extensions
 
 License:    ASL 2.0
@@ -130,3 +130,6 @@ rm -rf {test-,}requirements.txt
 
 
 %changelog
+* Mon Mar 21 2016 Haikel Guemar <hguemar@fedoraproject.org> 4.3.0-
+- Update to 4.3.0
+
