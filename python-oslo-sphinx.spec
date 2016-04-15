@@ -1,4 +1,4 @@
-%global sname oslo.sphinx
+%global sname oslosphinx
 %global pypi_name oslo-sphinx
 
 %if 0%{?fedora}
